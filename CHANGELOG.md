@@ -4,6 +4,23 @@
 
 The terminal-first surface to interact with Antigravity agents. Stay in your flow without context switching.
 
+## 1.2.15
+
+- Added prebuilt native Android binaries of the CLI that can run directly in Termux, without requiring a proot-distro environment.
+- Improved responsiveness while typing, scrolling, and streaming agent output by sharply reducing the memory the CLI allocates on every update and redraw
+- Improved `-p "/usage"` to show quota reset times in your local time zone when printing to a terminal; piped and `--json` output still use UTC timestamps, so existing scripts are unaffected
+- Improved the always-allow suggestion when approving `repo` commands: it is now limited to the subcommand, such as `repo status`, instead of allowing every `repo` command, matching `git`, `hg`, and `jj`
+- Improved how the agent handles a permission request that is not approved, such as one raised by a subagent that cannot ask you: it now respects the denial and no longer tries to work around it with other commands, scripts, or tools
+- Fixed the conversation view freezing for the rest of the session, with no new steps appearing while the agent kept working, after redraws such as several quick terminal resizes in a long conversation; the CLI now reconnects automatically, warns only if reconnecting fails, and sending a new message recovers a lost connection
+- Fixed requests made after your plan quota is used up and your AI credits balance cannot cover them: instead of retrying on `Working...` for about two and a half minutes and then showing the generic "Agent execution terminated due to error.", the CLI now immediately says "Your AI credits balance is too low to continue."
+- Fixed text like `Ga=q,f=32,s=1,v=1,i=31;AAAAAA==` being left behind in macOS Terminal.app after exiting the CLI over SSH; the CLI now asks the terminal to identify itself before probing for image support, and over SSH only Kitty and Ghostty are treated as image-capable, so WezTerm and Konsole no longer show garbled image placeholders
+- Fixed the Vim mode cursor stopping inside emoji such as 👩‍💻 or ⚠️ and characters with combining marks such as Devanagari: `h`, `l`, and other motions now move over whole characters, and `x` and `r` delete or replace the whole character instead of a hidden part of it
+- Fixed the search box in the `/resume` conversation picker wrapping long queries so that their beginning scrolled out of view; the box now uses the full terminal width
+- Fixed the agent being blocked from reading your global rules and customization files in `~/.gemini/config`, including the `rules/` folder, `AGENTS.md`, `GEMINI.md`, `skills.json`, `rules.json`, `plugins.json`, and `agents.json`; it can now read them and asks before editing them, while other files in that folder stay off-limits
+- Fixed global rules being added to the agent's context more than once when `~/.gemini/GEMINI.md`, `~/.gemini/AGENTS.md`, or their `~/.gemini/config/` counterparts are symlinks to the same file
+- Fixed signing in to MCP servers whose OAuth client registration responds with HTTP `200` instead of `201`, which previously failed with `registration failed with status 200`
+- Fixed large WebP images opened by the agent not being scaled down to fit image size limits the way PNG and JPEG images are
+
 ## 1.2.14
 
 - Added the `Queued Messages` option to `/config`: keep the default `Queue` to hold follow-up messages until the current turn ends, or choose `Send Immediately` to interrupt the agent with them; it can also be set with `"queuedMessages": "send-immediately"` in `settings.json`, which was previously ignored
