@@ -4,6 +4,13 @@
 
 The terminal-first surface to interact with Antigravity agents. Stay in your flow without context switching.
 
+## 1.2.17
+
+- Added announcement cards above the prompt for model launches, deprecations, and other service notices. Cards appear one at a time, newest first; press `Esc` on an empty prompt to dismiss the current card permanently and show the next one, and sending a message hides the card for the rest of the session.
+- Improved the Windows command sandbox so sandboxed commands no longer need administrator rights, and common tools such as Python, Git, and `npm` work inside the sandbox out of the box.
+- Fixed markdown table columns drifting out of alignment when a cell contains emoji such as ⚠️ or 👍🏽 or scripts with combining characters such as Hindi, which affected every session over SSH or inside tmux.
+- Fixed `.tiff` images being reported with the wrong file type and silently converted to PNG when the agent viewed them.
+
 ## 1.2.16
 
 - Added `←`/`→` shortcuts to `/config`: on a highlighted setting they switch to the previous or next value and save it right away, without opening the dropdown, and the footer shows a `←/→ Change` hint
